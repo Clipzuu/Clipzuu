@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clipzuu - Multi Tools Website</title>
+    <title>Clipzuu - Download Instagram, YouTube Videos Online</title>
+    <meta name="description" content="Free online video downloader for Instagram, YouTube, Facebook and more. Download videos in HD quality with Clipzuu.">
+    <meta name="keywords" content="instagram video downloader, youtube video downloader, facebook video download, video downloader, clipzuu">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -11,10 +13,9 @@
             --light-pink: #fce4ec;
             --dark-pink: #c2185b;
             --accent-blue: #2196f3;
-            --light-blue: #e3f2fd;
+            --white: #ffffff;
             --text-dark: #333;
             --text-light: #666;
-            --white: #ffffff;
             --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
             --card-hover: 0 8px 16px rgba(0,0,0,0.12);
             --transition: all 0.3s ease;
@@ -83,18 +84,6 @@
             color: var(--primary-pink);
         }
 
-        .contact-email {
-            display: flex;
-            align-items: center;
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        .contact-email i {
-            margin-right: 8px;
-            color: var(--primary-pink);
-        }
-
         .mobile-menu-btn {
             display: none;
             font-size: 24px;
@@ -128,93 +117,69 @@
             margin-bottom: 30px;
         }
 
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent-blue);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 18px;
-            text-decoration: none;
-            transition: var(--transition);
-            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
-        }
-
-        .cta-button:hover {
-            background-color: #1e88e5;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4);
-        }
-
-        .tool-icons {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .tool-icon {
+        .download-box {
             background: var(--white);
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 12px;
+            padding: 30px;
             box-shadow: var(--card-shadow);
-            font-size: 32px;
-            color: var(--primary-pink);
+            margin-top: 40px;
         }
 
-        /* Search Section */
-        .search-section {
-            padding: 40px 0;
-            background-color: var(--white);
-        }
-
-        .search-container {
-            max-width: 700px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .search-input {
+        .url-input {
             width: 100%;
-            padding: 18px 25px;
+            padding: 16px 20px;
             border: 2px solid var(--light-pink);
-            border-radius: 50px;
+            border-radius: 8px;
             font-size: 16px;
+            margin-bottom: 15px;
             outline: none;
             transition: var(--transition);
         }
 
-        .search-input:focus {
+        .url-input:focus {
             border-color: var(--primary-pink);
-            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
         }
 
-        .search-button {
-            position: absolute;
-            right: 8px;
-            top: 8px;
-            background: var(--primary-pink);
-            border: none;
+        .download-btn {
+            background-color: var(--primary-pink);
             color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 600;
+            cursor: pointer;
             transition: var(--transition);
+            width: 100%;
         }
 
-        .search-button:hover {
-            background: var(--dark-pink);
+        .download-btn:hover {
+            background-color: var(--dark-pink);
         }
 
-        /* Tools Sections */
-        .tools-section {
-            padding: 70px 0;
+        .platform-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .platform-icon {
+            background: var(--white);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--card-shadow);
+            font-size: 28px;
+            color: var(--primary-pink);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
         }
 
         .section-header {
@@ -223,7 +188,7 @@
         }
 
         .section-title {
-            font-size: 32px;
+            font-size: 36px;
             margin-bottom: 15px;
             color: var(--text-dark);
         }
@@ -234,61 +199,148 @@
             margin: 0 auto;
         }
 
-        .tools-grid {
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
-        .tool-card {
+        .feature-card {
             background: var(--white);
-            border-radius: 16px;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary-pink);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .feature-desc {
+            color: var(--text-light);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background-color: var(--light-pink);
+            padding: 80px 0;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-pink);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Supported Platforms */
+        .platforms {
+            padding: 80px 0;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .platform-card {
+            background: var(--white);
+            border-radius: 12px;
             padding: 25px;
             box-shadow: var(--card-shadow);
             transition: var(--transition);
             text-align: center;
         }
 
-        .tool-card:hover {
+        .platform-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--card-hover);
         }
 
-        .tool-icon-small {
+        .platform-logo {
             font-size: 40px;
-            color: var(--accent-blue);
-            margin-bottom: 20px;
+            color: var(--primary-pink);
+            margin-bottom: 15px;
         }
 
-        .tool-name {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: var(--text-dark);
+        .platform-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
 
-        .tool-desc {
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+            background-color: var(--light-pink);
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .faq-question {
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 20px 20px;
             color: var(--text-light);
-            font-size: 15px;
-            margin-bottom: 20px;
-            min-height: 40px;
-        }
-
-        .tool-button {
-            display: inline-block;
-            background-color: var(--accent-blue);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 14px;
-        }
-
-        .tool-button:hover {
-            background-color: #1e88e5;
-            transform: translateY(-2px);
+            display: none;
         }
 
         /* Footer */
@@ -395,14 +447,14 @@
                 font-size: 18px;
             }
             
-            .tool-icons {
+            .platform-icons {
                 gap: 20px;
             }
             
-            .tool-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 28px;
+            .platform-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
             }
         }
 
@@ -439,10 +491,6 @@
                 display: block;
             }
             
-            .contact-email {
-                display: none;
-            }
-            
             .hero {
                 padding: 60px 0;
             }
@@ -455,15 +503,15 @@
                 font-size: 16px;
             }
             
-            .tool-icons {
+            .platform-icons {
                 flex-wrap: wrap;
                 gap: 15px;
             }
             
-            .tool-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 24px;
+            .platform-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
             }
             
             .section-title {
@@ -473,6 +521,14 @@
             .footer-content {
                 flex-direction: column;
             }
+            
+            .steps {
+                flex-direction: column;
+            }
+            
+            .step {
+                margin-bottom: 30px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -480,24 +536,16 @@
                 font-size: 28px;
             }
             
-            .cta-button {
-                padding: 12px 25px;
+            .download-btn {
+                padding: 14px 20px;
                 font-size: 16px;
             }
             
-            .search-input {
-                padding: 14px 20px;
-            }
-            
-            .search-button {
-                padding: 8px 16px;
-            }
-            
-            .tools-grid {
+            .features-grid {
                 grid-template-columns: 1fr;
             }
             
-            .tool-card {
+            .feature-card {
                 padding: 20px;
             }
         }
@@ -513,15 +561,12 @@
                 <nav id="main-nav">
                     <ul>
                         <li><a href="#">Home</a></li>
-                        <li><a href="#">Tools</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Instagram Downloader</a></li>
+                        <li><a href="#">YouTube Downloader</a></li>
+                        <li><a href="#">Other Platforms</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>
                 </nav>
-                
-                <div class="contact-email">
-                    <i class="fas fa-envelope"></i>
-                    clipzuu5@gmail.com
-                </div>
                 
                 <button class="mobile-menu-btn" id="menu-toggle">
                     <i class="fas fa-bars"></i>
@@ -534,459 +579,270 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Multi Tools Website</h1>
-                <p>Convert, calculate, compress, and simplify your everyday tasks — fast and free.</p>
-                <a href="#" class="cta-button">Explore Tools</a>
+                <h1>Download Videos from Social Media</h1>
+                <p>Free online video downloader for Instagram, YouTube, Facebook and more. Download videos in HD quality with Clipzuu.</p>
                 
-                <div class="tool-icons">
-                    <div class="tool-icon">
-                        <i class="fas fa-image"></i>
-                    </div>
-                    <div class="tool-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="tool-icon">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                    <div class="tool-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="tool-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Search Section -->
-    <section class="search-section">
-        <div class="container">
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search a tool...">
-                <button class="search-button">Search</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Image Tools Section -->
-    <section class="tools-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">🖼 Image Tools</h2>
-                <p class="section-subtitle">Enhance, convert, and optimize your images with our powerful tools</p>
-            </div>
-            
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-exchange-alt"></i>
-                    </div>
-                    <h3 class="tool-name">Image Converter</h3>
-                    <p class="tool-desc">Convert images between different formats</p>
-                    <a href="#" class="tool-button">Use Tool</a>
+                <div class="download-box">
+                    <input type="text" class="url-input" placeholder="Paste video link here...">
+                    <button class="download-btn">Download Video</button>
                 </div>
                 
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-compress-arrows-alt"></i>
-                    </div>
-                    <h3 class="tool-name">Image Compressor</h3>
-                    <p class="tool-desc">Reduce image size without losing quality</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </div>
-                    <h3 class="tool-name">Image Resizer</h3>
-                    <p class="tool-desc">Resize images to any dimension</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-crop-alt"></i>
-                    </div>
-                    <h3 class="tool-name">Image Cropper</h3>
-                    <p class="tool-desc">Crop images to focus on important areas</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-font"></i>
-                    </div>
-                    <h3 class="tool-name">Image to Text (OCR)</h3>
-                    <p class="tool-desc">Extract text from images accurately</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-sync"></i>
-                    </div>
-                    <h3 class="tool-name">Image Rotator/Flipper</h3>
-                    <p class="tool-desc">Rotate or flip images as needed</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Document Tools Section -->
-    <section class="tools-section" style="background-color: var(--light-blue);">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">📄 Document Tools</h2>
-                <p class="section-subtitle">Manage, convert, and optimize your documents with ease</p>
-            </div>
-            
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-file-word"></i>
-                    </div>
-                    <h3 class="tool-name">PDF to Word / Word to PDF</h3>
-                    <p class="tool-desc">Convert between PDF and Word documents</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-file-archive"></i>
-                    </div>
-                    <h3 class="tool-name">PDF Compressor</h3>
-                    <p class="tool-desc">Reduce PDF file size while maintaining quality</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-object-group"></i>
-                    </div>
-                    <h3 class="tool-name">PDF Merger & Splitter</h3>
-                    <p class="tool-desc">Combine or split PDF files easily</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-exchange-alt"></i>
-                    </div>
-                    <h3 class="tool-name">Document Converter</h3>
-                    <p class="tool-desc">Convert between various document formats</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3 class="tool-name">PDF Lock/Unlock</h3>
-                    <p class="tool-desc">Secure your PDF files with encryption</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-signature"></i>
-                    </div>
-                    <h3 class="tool-name">eSign PDF</h3>
-                    <p class="tool-desc">Add electronic signatures to documents</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Calculator Tools Section -->
-    <section class="tools-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">🧮 Calculator Tools</h2>
-                <p class="section-subtitle">Perform calculations for various purposes with precision</p>
-            </div>
-            
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                    <h3 class="tool-name">Scientific Calculator</h3>
-                    <p class="tool-desc">Advanced calculator for complex calculations</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-birthday-cake"></i>
-                    </div>
-                    <h3 class="tool-name">Age Calculator</h3>
-                    <p class="tool-desc">Calculate age accurately from birth date</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-weight"></i>
-                    </div>
-                    <h3 class="tool-name">BMI Calculator</h3>
-                    <p class="tool-desc">Calculate your Body Mass Index</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3 class="tool-name">Loan EMI Calculator</h3>
-                    <p class="tool-desc">Calculate your loan equated monthly installments</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-percentage"></i>
-                    </div>
-                    <h3 class="tool-name">GST Calculator</h3>
-                    <p class="tool-desc">Calculate GST amounts easily</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <h3 class="tool-name">Currency Converter</h3>
-                    <p class="tool-desc">Convert between world currencies</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Text Tools Section -->
-    <section class="tools-section" style="background-color: var(--light-blue);">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">🔤 Text Tools</h2>
-                <p class="section-subtitle">Transform and manipulate text with our text utilities</p>
-            </div>
-            
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-text-height"></i>
-                    </div>
-                    <h3 class="tool-name">Text Case Converter</h3>
-                    <p class="tool-desc">Change text between uppercase, lowercase and more</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-sort-amount-down"></i>
-                    </div>
-                    <h3 class="tool-name">Word & Character Counter</h3>
-                    <p class="tool-desc">Count words, characters, and sentences in text</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-filter"></i>
-                    </div>
-                    <h3 class="tool-name">Remove Duplicate Lines</h3>
-                    <p class="tool-desc">Clean up text by removing duplicate lines</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-sort-alpha-down"></i>
-                    </div>
-                    <h3 class="tool-name">Text Sorter</h3>
-                    <p class="tool-desc">Sort text lines alphabetically or numerically</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-retweet"></i>
-                    </div>
-                    <h3 class="tool-name">Text Reverser</h3>
-                    <p class="tool-desc">Reverse text or string order</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3 class="tool-name">Text Encryptor/Decryptor</h3>
-                    <p class="tool-desc">Encrypt and decrypt text for security</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Web/Developer Tools Section -->
-    <section class="tools-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">🌐 Web/Developer Tools</h2>
-                <p class="section-subtitle">Tools for developers to streamline their workflow</p>
-            </div>
-            
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-file-code"></i>
-                    </div>
-                    <h3 class="tool-name">HTML/CSS/JS Minifier</h3>
-                    <p class="tool-desc">Minify your code for better performance</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3 class="tool-name">JSON Formatter & Validator</h3>
-                    <p class="tool-desc">Format and validate JSON data</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <h3 class="tool-name">Base64 Encoder/Decoder</h3>
-                    <p class="tool-desc">Encode and decode Base64 strings</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-link"></i>
-                    </div>
-                    <h3 class="tool-name">URL Encoder/Decoder</h3>
-                    <p class="tool-desc">Encode and decode URL strings</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-eye-dropper"></i>
-                    </div>
-                    <h3 class="tool-name">Color Picker & Converter</h3>
-                    <p class="tool-desc">Pick colors and convert between formats</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-terminal"></i>
-                    </div>
-                    <h3 class="tool-name">Regex Tester</h3>
-                    <p class="tool-desc">Test and debug regular expressions</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Utility Tools Section -->
-    <section class="tools-section" style="background-color: var(--light-blue);">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">🛠️ Utility Tools</h2>
-                <p class="section-subtitle">Handy tools for various everyday needs</p>
-            </div>
-            
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon-small">
+                <div class="platform-icons">
+                    <div class="platform-icon">
                         <i class="fab fa-instagram"></i>
                     </div>
-                    <h3 class="tool-name">Instagram Video Downloader</h3>
-                    <p class="tool-desc">Download videos from Instagram easily</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-qrcode"></i>
+                    <div class="platform-icon">
+                        <i class="fab fa-youtube"></i>
                     </div>
-                    <h3 class="tool-name">QR Code Generator & Scanner</h3>
-                    <p class="tool-desc">Create and scan QR codes</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-barcode"></i>
+                    <div class="platform-icon">
+                        <i class="fab fa-facebook"></i>
                     </div>
-                    <h3 class="tool-name">Barcode Generator</h3>
-                    <p class="tool-desc">Generate barcodes for products</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-fingerprint"></i>
+                    <div class="platform-icon">
+                        <i class="fab fa-twitter"></i>
                     </div>
-                    <h3 class="tool-name">UUID Generator</h3>
-                    <p class="tool-desc">Generate unique identifiers</p>
-                    <a href="#" class="tool-button">Use Tool</a>
-                </div>
-                
-                <div class="tool-card">
-                    <div class="tool-icon-small">
-                        <i class="fas fa-ruler-combined"></i>
+                    <div class="platform-icon">
+                        <i class="fab fa-tiktok"></i>
                     </div>
-                    <h3 class="tool-name">Unit Converter</h3>
-                    <p class="tool-desc">Convert between different units of measurement</p>
-                    <a href="#" class="tool-button">Use Tool</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Clipzuu?</h2>
+                <p class="section-subtitle">The best video downloader with amazing features</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Fast Downloading</h3>
+                    <p class="feature-desc">Download videos quickly without any delays or waiting time.</p>
                 </div>
                 
-                <div class="tool-card">
-                    <div class="tool-icon-small">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">100% Safe</h3>
+                    <p class="feature-desc">No registration required and completely safe to use with no viruses.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-thumbs-up"></i>
+                    </div>
+                    <h3 class="feature-title">High Quality</h3>
+                    <p class="feature-desc">Download videos in the highest available quality including HD.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
                         <i class="fas fa-globe"></i>
                     </div>
-                    <h3 class="tool-name">Time Zone Converter</h3>
-                    <p class="tool-desc">Convert time between different time zones</p>
-                    <a href="#" class="tool-button">Use Tool</a>
+                    <h3 class="feature-title">Unlimited Access</h3>
+                    <p class="feature-desc">Works worldwide with no download limits or restrictions.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile Friendly</h3>
+                    <p class="feature-desc">Works perfectly on all devices including smartphones and tablets.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="feature-title">No Registration</h3>
+                    <p class="feature-desc">No need to sign up or provide any personal information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How To Download Videos</h2>
+                <p class="section-subtitle">Download any video in just 3 simple steps</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Copy Video URL</h3>
+                    <p>Copy the link of the video you want to download from Instagram, YouTube, etc.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Paste Link</h3>
+                    <p>Paste the copied URL into the input box on Clipzuu website.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Download Video</h3>
+                    <p>Click the download button and choose your preferred video quality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Platforms -->
+    <section class="platforms">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Supported Platforms</h2>
+                <p class="section-subtitle">Download videos from all popular social media platforms</p>
+            </div>
+            
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-logo">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3 class="platform-name">Instagram</h3>
+                    <p>Download videos from Instagram posts, reels, and IGTV</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <h3 class="platform-name">YouTube</h3>
+                    <p>Download videos from YouTube in various qualities</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">
+                        <i class="fab fa-facebook"></i>
+                    </div>
+                    <h3 class="platform-name">Facebook</h3>
+                    <p>Download videos from Facebook posts and stories</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <h3 class="platform-name">Twitter</h3>
+                    <p>Download videos from Twitter tweets</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                    <h3 class="platform-name">TikTok</h3>
+                    <p>Download videos from TikTok without watermark</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-logo">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="platform-name">Other Platforms</h3>
+                    <p>Download from many other video platforms</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Find answers to common questions about Clipzuu</p>
+            </div>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is Clipzuu free to use?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, Clipzuu is completely free to use. You can download as many videos as you want without any cost.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What websites does Clipzuu support?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Clipzuu supports Instagram, YouTube, Facebook, Twitter, TikTok, and many other social media platforms.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is it legal to download videos with Clipzuu?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Clipzuu is designed for personal use only. Please respect copyright laws and only download videos for personal viewing.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do I need to install any software?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        No, Clipzuu is a web-based tool that works directly in your browser. There's no need to install any software.
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer id="contact">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
                     <a href="#" class="logo">Clipzuu</a>
-                    <p class="footer-tagline">Simplifying your digital life.</p>
+                    <p class="footer-tagline">The fastest way to download social media videos</p>
                 </div>
                 
                 <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="#">Home</a></li>
-                        <li><a href="#">Tools</a></li>
+                        <li><a href="#">Instagram Downloader</a></li>
+                        <li><a href="#">YouTube Downloader</a></li>
+                        <li><a href="#">Facebook Downloader</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Legal</h3>
+                    <ul>
                         <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Copyright</a></li>
+                        <li><a href="#">DMCA</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-contact">
                     <h3>Contact Us</h3>
-                    <p><i class="fas fa-envelope"></i> clipzuu5@gmail.com</p>
+                    <p><i class="fas fa-envelope"></i> Clipzuu5@gmail.com</p>
+                    <p><i class="fas fa-globe"></i> www.clipzuu.com</p>
                 </div>
             </div>
             
@@ -1002,19 +858,26 @@
             document.getElementById('main-nav').classList.toggle('active');
         });
 
-        // Simple search functionality
-        document.querySelector('.search-button').addEventListener('click', function() {
-            const searchTerm = document.querySelector('.search-input').value;
-            if (searchTerm.trim() !== '') {
-                alert(`Searching for: ${searchTerm}`);
-                // In a real implementation, this would filter the tools
-            }
+        // FAQ toggle
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+                const icon = question.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
         });
 
-        // Allow pressing Enter to search
-        document.querySelector('.search-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.querySelector('.search-button').click();
+        // Download button functionality
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            const urlInput = document.querySelector('.url-input');
+            if (urlInput.value.trim() === '') {
+                alert('Please paste a video URL first');
+                urlInput.focus();
+            } else {
+                alert('This is a demonstration. In a real implementation, this would process the video URL: ' + urlInput.value);
             }
         });
     </script>
