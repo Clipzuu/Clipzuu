@@ -1,0 +1,226 @@
+import React, { useState, useRef } from "react";
+
+// Image Converter Toolkit - Single-file React component
+// - TailwindCSS utility classes used for styling
+// - Features: drag & drop, preview, choose output format (png, jpeg, webp, avif),
+//   quality slider, resize by width/height (maintain aspect by default), background color for transparent->JPEG,
+//   batch multiple files support, quick download of converted images.
+
+export default function ImageConverterToolkit() {
+  const [files, setFiles] = useState([]); // {file, previewUrl, name, convertedBlob}
+  const [format, setFormat] = useState("image/png");
+  const [quality, setQuality] = useState(0.9);
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [keepAspect, setKeepAspect] = useState(true);
+  const [bgColor, setBgColor] = useState("#ffffff");
+  const inputRef = useRef(null);
+
+  function handleFiles(selectedFiles) {
+    const arr = Array.from(selectedFiles).map((f) => ({
+      file: f,
+      name: f.name.replace(/\.[^.]+$/, ""),
+      previewUrl: URL.createObjectURL(f),
+      convertedBlob: null,
+    }));
+    setFiles((prev) => [...prev, ...arr]);
+  }
+
+  function onDrop(e) {
+    e.preventDefault();
+    if (e.dataTransfer?.files) handleFiles(e.dataTransfer.files);
+  }
+
+  function onPickFiles() {
+    inputRef.current?.click();
+  }
+
+  async function convertImageItem(item) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = async () => {
+        // determine target size
+        let targetW = width > 0 ? width : img.width;
+        let targetH = height > 0 ? height : img.height;
+        if (keepAspect) {
+          const ratio = img.width / img.height;
+          if (width > 0 && height === 0) {
+            targetH = Math.round(width / ratio);
+          } else if (height > 0 && width === 0) {
+            targetW = Math.round(height * ratio);
+          } else if (width > 0 && height > 0) {
+            // keep aspect: fit inside provided box
+            const boxRatio = width / height;
+            if (ratio > boxRatio) {
+              targetW = width;
+              targetH = Math.round(width / ratio);
+            } else {
+              targetH = height;
+              targetW = Math.round(height * ratio);
+            }
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = targetW;
+        canvas.height = targetH;
+        const ctx = canvas.getContext("2d");
+
+        // If converting to JPEG (or any format that doesn't support transparency), paint bg
+        if (format === "image/jpeg" || format === "image/jpg") {
+          ctx.fillStyle = bgColor;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // draw image with smoothing
+        ctx.imageSmoothingEnabled = true;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // canvas to blob
+        // Some browsers don't support 'image/avif' in toBlob; handle fallback
+        const tryToBlob = (mime) =>
+          new Promise((res) => canvas.toBlob(res, mime, quality));
+
+        let mime = format;
+        const blob = await tryToBlob(mime);
+        if (!blob && format === "image/avif") {
+          // fallback to webp then png
+          const fallback = await tryToBlob("image/webp");
+          resolve({ ...item, convertedBlob: fallback || await tryToBlob("image/png") });
+        } else {
+          resolve({ ...item, convertedBlob: blob });
+        }
+      };
+      img.onerror = (err) => reject(err);
+      img.crossOrigin = "anonymous";
+      img.src = item.previewUrl;
+    });
+  }
+
+  async function convertAll() {
+    if (files.length === 0) return;
+    const updated = [];
+    for (const item of files) {
+      try {
+        const result = await convertImageItem(item);
+        updated.push(result);
+      } catch (e) {
+        console.error("Conversion failed for", item.file.name, e);
+        updated.push({ ...item, convertedBlob: null });
+      }
+    }
+    setFiles(updated);
+  }
+
+  function downloadBlob(blob, filename) {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function removeFile(idx) {
+    const removed = [...files];
+    const item = removed.splice(idx, 1)[0];
+    try { URL.revokeObjectURL(item.previewUrl); } catch (e) {}
+    setFiles(removed);
+  }
+
+  function clearAll() {
+    files.forEach(f => { try { URL.revokeObjectURL(f.previewUrl)} catch(e){} });
+    setFiles([]);
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="bg-white rounded-2xl shadow-md p-6">
+        <h2 className="text-2xl font-semibold mb-2">Clipzuu — Image Converter Toolkit</h2>
+        <p className="text-sm text-gray-500 mb-4">Drag & drop images or pick files. Convert to PNG/JPEG/WebP/AVIF, resize, set quality and background for non-transparent formats.</p>
+
+        <div
+          onDrop={onDrop}
+          onDragOver={(e) => e.preventDefault()}
+          className="border-2 border-dashed border-pink-300 rounded-xl p-6 mb-4 text-center bg-gradient-to-b from-pink-50 to-white"
+        >
+          <input
+            ref={inputRef}
+            type="file"
+            multiple
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => handleFiles(e.target.files)}
+          />
+          <button onClick={onPickFiles} className="px-4 py-2 bg-pink-500 text-white rounded-lg mr-2">Select files</button>
+          <span className="ml-2 text-sm text-gray-600">or drag & drop images here</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="space-y-3">
+            <label className="block text-sm font-medium">Output format</label>
+            <select value={format} onChange={(e) => setFormat(e.target.value)} className="w-full p-2 border rounded">
+              <option value="image/png">PNG (lossless)</option>
+              <option value="image/jpeg">JPEG (good for photos)</option>
+              <option value="image/webp">WebP (small & modern)</option>
+              <option value="image/avif">AVIF (best compression, experimental in some browsers)</option>
+            </select>
+
+            <label className="block text-sm font-medium">Quality: {Math.round(quality * 100)}%</label>
+            <input type="range" min="0.1" max="1" step="0.05" value={quality} onChange={(e) => setQuality(Number(e.target.value))} />
+
+            <div className="flex items-center space-x-2">
+              <label className="text-sm">Width</label>
+              <input type="number" min="0" value={width} onChange={(e) => setWidth(Number(e.target.value))} className="w-24 p-1 border rounded" />
+              <label className="text-sm">Height</label>
+              <input type="number" min="0" value={height} onChange={(e) => setHeight(Number(e.target.value))} className="w-24 p-1 border rounded" />
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <label className="flex items-center gap-2"><input type="checkbox" checked={keepAspect} onChange={(e) => setKeepAspect(e.target.checked)} /> Keep aspect</label>
+            </div>
+
+            <label className="block text-sm font-medium">Background (used for JPEG)</label>
+            <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="w-16 h-10 p-1 rounded" />
+
+            <div className="flex space-x-2 mt-3">
+              <button onClick={convertAll} className="px-4 py-2 bg-pink-500 text-white rounded">Convert all</button>
+              <button onClick={clearAll} className="px-4 py-2 bg-gray-200 rounded">Clear</button>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Files ({files.length})</label>
+            <div className="space-y-3 max-h-96 overflow-auto">
+              {files.map((item, idx) => (
+                <div key={idx} className="p-3 bg-gray-50 rounded flex items-center gap-3">
+                  <img src={item.previewUrl} alt="preview" className="w-20 h-20 object-cover rounded" />
+                  <div className="flex-1">
+                    <div className="font-medium">{item.name}</div>
+                    <div className="text-sm text-gray-500">{item.file.type} • {(item.file.size/1024).toFixed(0)} KB</div>
+                    <div className="mt-2 flex gap-2">
+                      <button onClick={async () => {
+                        const converted = await convertImageItem(item);
+                        const newFiles = [...files]; newFiles[idx] = converted; setFiles(newFiles);
+                      }} className="px-2 py-1 bg-white border rounded">Convert</button>
+
+                      <button onClick={() => downloadBlob(item.convertedBlob, `${item.name}.${format.split('/')[1]}`)} className="px-2 py-1 bg-pink-100 rounded">Download</button>
+
+                      <button onClick={() => removeFile(idx)} className="px-2 py-1 bg-red-100 rounded">Remove</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {files.length === 0 && <div className="text-sm text-gray-500">No files yet — add some above.</div>}
+            </div>
+          </div>
+        </div>
+
+        <div className="text-xs text-gray-400 mt-2">Note: AVIF support varies by browser. If AVIF conversion fails, the toolkit will try WebP then PNG as a fallback.</div>
+      </div>
+    </div>
+  );
+}
